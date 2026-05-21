@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GP Ansor | Sumberagung Mantup</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fefaf5;
+            color: #2c3e2f;
+            scroll-behavior: smooth;
+            transition: background 0.3s, color 0.2s;
+        }
+
+        /* tema gelap */
+        body.dark {
+            background: #0f2a1f;
+            color: #e2f0e4;
+        }
+        body.dark .card, body.dark .contact-card, body.dark .about-card, body.dark .project-card {
+            background: #1e3a2f;
+            color: #f0fae8;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+        }
+        body.dark .navbar {
+            background: #0a2a1ae6;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #2d6a4f;
+        }
+        body.dark .btn-outline {
+            border-color: #74c69d;
+            color: #d8f3dc;
+        }
+        body.dark .skill-tag {
+            background: #2d6a4f;
+            color: #f1f9f0;
+        }
+        body.dark .footer {
+            background: #051f12;
+            border-top: 1px solid #1e462e;
+        }
+        body.dark .upload-section {
+            background: #1e3a2f;
+        }
+        body.dark input, body.dark textarea {
+            background: #0f2a1f;
+            border-color: #2d6a4f;
+            color: white;
+        }
+
+        /* navigasi */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #fefaf5dd;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            z-index: 1000;
+            border-bottom: 1px solid #d4e6d4;
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2b6e3c, #1e8449);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .logo i {
+            background: none;
+            color: #2b6e3c;
+        }
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1f4f2b;
+            font-family: 'Poppins', sans-serif;
+        }
+        body.dark .nav-btn {
+            color: #cfe8d5;
+        }
+        .nav-btn.active {
+            background: #2b6e3c;
+            color: white;
+            box-shadow: 0 6px 12px -6px #2b6e3c;
+        }
+        .nav-btn:hover:not(.active) {
+            background: #e8f5e9;
+        }
+        body.dark .nav-btn:hover:not(.active) {
+            background: #2d5a41;
+        }
+        .theme-toggle {
+            background: #e8f5e9;
+            border: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 7rem 1.5rem 3rem;
+        }
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .page.active-page {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .hero-logo{
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1e8449, #2b9348);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-img {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(145deg, #2b6e3c, #1e8449);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.2);
+        }
+
+        .about-card, .contact-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin: 1.5rem 0;
+        }
+        .skill-tag {
+            background: #e8f5e9;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #1e5a2e;
+        }
+
+        /* GALERI KEGIATAN */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .project-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 28px -12px rgba(43,110,60,0.3);
+        }
+        .project-img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            background: #c8e6c9;
+            display: block;
+        }
+        .project-info {
+            padding: 1.2rem;
+        }
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #1e5a2e;
+        }
+        body.dark .project-info h3 {
+            color: #b7e4c7;
+        }
+        .btn-delete {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .btn-delete:hover {
+            background: #b91c1c;
+            transform: scale(0.97);
+        }
+        .empty-gallery-msg {
+            text-align: center;
+            padding: 2rem;
+            background: #f1f8e9;
+            border-radius: 2rem;
+        }
+
+        /* Form tambah kegiatan */
+        .add-activity-form {
+            background: #e8f5e9;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        body.dark .add-activity-form {
+            background: #1e3a2f;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-row input, .form-row textarea {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border-radius: 1.2rem;
+            border: 1px solid #cfe8cf;
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-success {
+            background: #2b6e3c;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .upload-img-btn {
+            background: #4b6e3c;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border-radius: 1.2rem;
+            border: 1px solid #cfe8cf;
+            background: #ffffff;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: #2b6e3c;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: #1e5a2e;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #2b6e3c;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #2b6e3c;
+        }
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #ffffff;
+            border-top: 1px solid #e2f0e2;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 680px) {
+            .navbar {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding-top: 8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><i class="fas fa-users"></i> Ansor Sumberagung</div>
+    <div class="nav-links">
+        <button class="nav-btn" data-page="home">🏠 Beranda</button>
+        <button class="nav-btn" data-page="about">🕌 Profil</button>
+        <button class="nav-btn" data-page="portfolio">📸 Galeri Kegiatan</button>
+        <button class="nav-btn" data-page="contact">📞 Kontak & Gabung</button>
+    </div>
+    <button class="theme-toggle" id="darkmodeToggle"><i class="fas fa-moon"></i></button>
+</nav>
+
+<div class="container">
+    <!-- Halaman Beranda -->
+    <div id="home" class="page active-page">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>GP Ansor <span class="gradient-text">Sumberagung</span> <br>Mantup, Lamongan</h1>
+                <p style="margin: 1rem 0 1.5rem; font-size: 1.2rem; opacity: 0.8;">Gerakan Pemuda Ansor ranting Sumberagung — Berkhidmah untuk Nahdlatul Ulama, membangun generasi islami yang mandiri dan berakhlak.</p>
+                <button class="btn-primary" id="exploreBtn"><i class="fas fa-calendar-alt"></i> Lihat Kegiatan Kami</button>
+            </div>
+            <!-- <div class="hero-img">
+                <i class="fas fa-hand-peace"></i>
+            </div> -->
+            <div class="hero-img">
+                <img src="ansor.png" alt="Logo Ansor" class="hero-logo">
+            </div>
+        </div>
+        <div style="margin-top: 2rem;">
+            <h3>Nilai Juang Ansor</h3>
+            <div class="skills">
+                <span class="skill-tag">Ahlussunnah Wal Jamaah</span>
+                <span class="skill-tag">Kebangsaan</span>
+                <span class="skill-tag">Kemandirian</span>
+                <span class="skill-tag">Sosial Keagamaan</span>
+                <span class="skill-tag">Kepemudaan</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Halaman Profil -->
+    <div id="about" class="page">
+        <div class="about-card">
+            <h2><i class="fas fa-flag-checkered"></i> Profil Ranting Sumberagung</h2>
+            <p style="margin: 1rem 0; line-height: 1.5;">GP Ansor Ranting Sumberagung, Kecamatan Mantup, Kabupaten Lamongan adalah sayap kepemudaan Nahdlatul Ulama yang aktif dalam kegiatan keagamaan, sosial, dan pemberdayaan masyarakat. Berdiri sejak 1998, kami terus mengembangkan kader-kader muda yang cinta tanah air dan berkontribusi nyata.</p>
+            <p>Kegiatan rutin: Pengajian kitab kuning, pelatihan kepemimpinan, bakti sosial, dan peringatan hari besar Islam.</p>
+            <div class="skills">
+                <span class="skill-tag">📍 Sumberagung, Mantup</span>
+                <span class="skill-tag">🕌 NU & Aswaja</span>
+                <span class="skill-tag">🤝 Kepemudaan</span>
+                <span class="skill-tag">📖 Pendidikan</span>
+            </div>
+            <button class="btn-outline" id="contactFromAbout"><i class="fas fa-envelope"></i> Gabung Menjadi Anggota</button>
+        </div>
+        <div class="about-card">
+            <h3><i class="fas fa-tasks"></i> Program Unggulan</h3>
+            <ul style="margin-top: 0.8rem; margin-left: 1.5rem;">
+                <li>⭐ Pelatihan Kader Dasar (PKD) Ansor</li>
+                <li>⭐ Santunan Anak Yatim & Dhuafa</li>
+                <li>⭐ Peringatan Maulid Nabi & Harlah NU</li>
+                <li>⭐ Kelas Kewirausahaan Pemuda</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Halaman Galeri Kegiatan dengan TAMBAH & HAPUS LANGSUNG -->
+    <div id="portfolio" class="page">
+        <h2 style="margin-bottom: 0.5rem;"><i class="fas fa-photo-video"></i> Dokumentasi Kegiatan Ansor Sumberagung</h2>
+        <!-- <p style="margin-bottom: 1.5rem;">Kelola kegiatan: tambah foto + judul + deskripsi, dan hapus kegiatan yang tidak diperlukan.</p> -->
+        
+        <!-- FORM TAMBAH KEGIATAN (LENGKAP) -->
+
+
+        <!-- DAFTAR GALERI KEGIATAN -->
+        <div id="galleryContainer" class="gallery"></div>
+        
+        <!-- <div style="display: flex; justify-content: center; margin-top: 1rem;">
+            <button id="clearGalleryBtn" class="btn-outline" style="border-color: #dc2626; color:#b91c1c;"><i class="fas fa-trash-alt"></i> Reset Semua Kegiatan (ke default)</button>
+        </div> -->
+    </div>
+
+    <!-- Halaman Kontak -->
+    <div id="contact" class="page">
+        <div class="contact-card">
+            <h2><i class="fas fa-paper-plane"></i> Hubungi Sekretariat</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Nama lengkap" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email aktif" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" rows="4" placeholder="Pesan / Pendaftaran anggota baru / Ingin kolaborasi kegiatan..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Kirim Pesan</button>
+                <p id="formFeedback" style="margin-top: 1rem; font-size: 0.9rem;"></p>
+            </form>
+        </div>
+        <div class="contact-card">
+            <h3><i class="fas fa-address-card"></i> Kontak & Sosial Media</h3>
+            <div style="display: flex; gap: 1.5rem; margin-top: 1rem; font-size: 1.8rem;">
+                <a href="#" style="color:#2b6e3c;"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" style="color:#2b6e3c;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color:#2b6e3c;"><i class="fab fa-facebook"></i></a>
+                <a href="#" style="color:#2b6e3c;"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p style="margin-top: 1.5rem;"><i class="fas fa-map-marker-alt"></i> Dsn. Banjarselir, Ds. Sumberagung, Kec. Mantup, Lamongan</p>
+            <p><i class="fas fa-phone-alt"></i> +62 857 3297 0937 (Ketua Ranting)</p>
+            <p><i class="fas fa-envelope"></i> anshorsumberagungmantup@gmail.com</p>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>© 2026 GP Ansor Ranting Sumberagung — Mantup | Khidmah untuk Umat, Jaya untuk NU</p>
+</div>
+
+<script>
+    // ======================= DATA GALERI ANSOR =======================
+    let portfolioItems = [];
+
+    // Data kegiatan default
+    const defaultProjects = [
+        { id: "1", title: "MDS Rijalul Ansor", desc: "Pembacaan Sholat Nabi di masjid Baitul Muttaqin Banjar selir, 20 Mei 2026.", img: "mds.png" },
+        { id: "2", title: "Pelatihan Kader Ansor", desc: "Pembekalan kepemimpinan dan wawasan kebangsaan.", img: "https://picsum.photos/id/155/400/250" },
+        { id: "3", title: "Pengajian Rutin Kitab Kuning", desc: "Kajian pekanan di Musholla Al-Falah Sumberagung.", img: "https://picsum.photos/id/30/400/250" }
+    ];
+
+    function saveToLocalStorage() {
+        localStorage.setItem('ansorGalleryV2', JSON.stringify(portfolioItems));
+    }
+
+    function loadFromLocalStorage() {
+        const stored = localStorage.getItem('ansorGalleryV2');
+        if (stored && JSON.parse(stored).length > 0) {
+            portfolioItems = JSON.parse(stored);
+        } else {
+            portfolioItems = [...defaultProjects];
+            saveToLocalStorage();
+        }
+        renderGallery();
+    }
+
+    // render daftar kegiatan + tombol hapus
+    function renderGallery() {
+        const container = document.getElementById('galleryContainer');
+        if (!container) return;
+        if (portfolioItems.length === 0) {
+            container.innerHTML = `<div class="empty-gallery-msg"><i class="fas fa-images fa-2x"></i><p>Belum ada dokumentasi kegiatan. Silakan tambah kegiatan baru di atas!</p></div>`;
+            return;
+        }
+        container.innerHTML = portfolioItems.map(item => `
+            <div class="project-card" data-id="${item.id}">
+                <img class="project-img" src="${item.img}" alt="${item.title}" onerror="this.src='https://placehold.co/400x250?text=Kegiatan+Ansor'">
+                <div class="project-info">
+                    <h3>${escapeHtml(item.title)}</h3>
+                    <p>${escapeHtml(item.desc)}</p>
+                </div>
+            </div>
+        `).join('');
+
+        // Event listener hapus (setiap tombol hapus)
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute('data-id');
+                if (confirm("Yakin ingin menghapus kegiatan ini?")) {
+                    deleteProjectById(id);
+                }
+            });
+        });
+    }
+
+    function deleteProjectById(id) {
+        portfolioItems = portfolioItems.filter(item => item.id !== id);
+        saveToLocalStorage();
+        renderGallery();
+    }
+
+    // Fungsi menambah kegiatan dengan validasi
+    function addNewProject(title, desc, imageUrl) {
+        if (!title || title.trim() === "") {
+            alert("Judul kegiatan wajib diisi!");
+            return false;
+        }
+        const newId = Date.now().toString();
+        const finalImg = imageUrl || "https://placehold.co/400x250?text=Kegiatan+Ansor";
+        portfolioItems.unshift({
+            id: newId,
+            title: title.trim(),
+            desc: desc.trim() || "Dokumentasi kegiatan ranting Sumberagung",
+            img: finalImg
+        });
+        saveToLocalStorage();
+        renderGallery();
+        return true;
+    }
+
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Fungsi membaca file gambar menjadi base64
+    function readImageAsBase64(file, callback) {
+        if (!file || !file.type.startsWith('image/')) {
+            alert("Harap pilih file gambar (jpg/png)");
+            callback(null);
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            callback(e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ========== TAMBAH KEGIATAN DENGAN FORM ==========
+    // const btnAdd = document.getElementById('btnAddActivity');
+    // const titleInput = document.getElementById('newTitle');
+    // const descInput = document.getElementById('newDesc');
+    // const imageFileInput = document.getElementById('newImageUpload');
+
+    // btnAdd.addEventListener('click', () => {
+    //     const title = titleInput.value;
+    //     const desc = descInput.value;
+    //     const file = imageFileInput.files[0];
+
+    //     if (!title.trim()) {
+    //         alert("Judul kegiatan tidak boleh kosong!");
+    //         return;
+    //     }
+
+    //     if (file) {
+    //         readImageAsBase64(file, (base64) => {
+    //             if (base64) {
+    //                 addNewProject(title, desc, base64);
+    //             } else {
+    //                 addNewProject(title, desc, null);
+    //             }
+    //             // reset form
+    //             titleInput.value = '';
+    //             descInput.value = '';
+    //             imageFileInput.value = '';
+    //         });
+    //     } else {
+    //         // tanpa gambar, pakai placeholder
+    //         addNewProject(title, desc, null);
+    //         titleInput.value = '';
+    //         descInput.value = '';
+    //         imageFileInput.value = '';
+    //     }
+    // });
+
+    // // Reset ke kegiatan default
+    // document.getElementById('clearGalleryBtn')?.addEventListener('click', () => {
+    //     if (confirm("⚠️ Reset semua kegiatan ke data awal? (Semua kegiatan tambahan akan hilang)")) {
+    //         portfolioItems = [...defaultProjects];
+    //         saveToLocalStorage();
+    //         renderGallery();
+    //     }
+    // });
+
+    // ========== Navigasi Halaman ==========
+    const pages = ['home', 'about', 'portfolio', 'contact'];
+    function showPage(pageId) {
+        pages.forEach(p => {
+            const el = document.getElementById(p);
+            if (el) el.classList.remove('active-page');
+        });
+        const activePage = document.getElementById(pageId);
+        if(activePage) activePage.classList.add('active-page');
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            if(btn.getAttribute('data-page') === pageId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        sessionStorage.setItem('currentPage', pageId);
+    }
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const page = btn.getAttribute('data-page');
+            if(page) showPage(page);
+        });
+    });
+
+    document.getElementById('exploreBtn')?.addEventListener('click', () => {
+        showPage('portfolio');
+    });
+    document.getElementById('contactFromAbout')?.addEventListener('click', () => {
+        showPage('contact');
+    });
+
+    // Dark mode
+    const darkToggle = document.getElementById('darkmodeToggle');
+    darkToggle?.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const icon = darkToggle.querySelector('i');
+        if(document.body.classList.contains('dark')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    });
+
+    // Form kontak - langsung ke WhatsApp
+    const contactForm = document.getElementById('contactForm');
+    const formFeedback = document.getElementById('formFeedback');
+    if(contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if(name && email && message) {
+                // Buat pesan untuk WhatsApp
+                const waMessage = `Halo%20Ansor%20Sumberagung%0A%0A*Nama%20Lengkap:*%20${encodeURIComponent(name)}%0A*Email:*%20${encodeURIComponent(email)}%0A*Pesan:*%0A${encodeURIComponent(message)}%0A%0A--%20Dari%20Website%20Ansor%20Sumberagung`;
+                const waUrl = `https://wa.me/6285732970937?text=${waMessage}`;
+                
+                // Buka WhatsApp
+                window.open(waUrl, '_blank');
+                
+                formFeedback.innerHTML = '<span style="color: #2b6e3c;"><i class="fas fa-check-circle"></i> Terima kasih! Anda akan diarahkan ke WhatsApp.</span>';
+                contactForm.reset();
+                setTimeout(() => { formFeedback.innerHTML = ''; }, 3000);
+            } else {
+                formFeedback.innerHTML = '<span style="color:#c7254e;">Isi nama, email & pesan dengan benar.</span>';
+            }
+        });
+    }
+
+    // Inisialisasi
+    loadFromLocalStorage();
+    const savedPage = sessionStorage.getItem('currentPage');
+    if(savedPage && pages.includes(savedPage)) {
+        showPage(savedPage);
+    } else {
+        showPage('home');
+    }
+</script>
+</body>
+</html>
